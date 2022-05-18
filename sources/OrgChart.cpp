@@ -6,6 +6,11 @@ using namespace std;
 OrgChart::OrgChart(){
     this->root = nullptr;
 }
+
+OrgChart::~OrgChart(){
+    
+}
+
 OrgChart & OrgChart::add_root(const string & job){
     if(this->root == nullptr){
         this->root = new Node(job);

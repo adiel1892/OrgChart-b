@@ -39,7 +39,7 @@ TEST_CASE("test_1"){
     unsigned int j = 0;
     vector<string> REVERSE_LEVEL_ORDER = {"TEN" , "NINE" , "FIVE" , "SIX" , "SEVEN" , "EIGHT" , "TWO" , "THREE" , "FOUR" , "ONE"};
     for (auto it = org.begin_reverse_order(); it != org.reverse_order(); ++it){
-        CHECK(*it == BEGIN_LEVEL_ORDER.at(j++));
+        CHECK(*it == REVERSE_LEVEL_ORDER.at(j++));
     }
     unsigned int k = 0;
     vector<string> PRE_ORDER = {"ONE" , "TWO" , "FIVE" , "TEN" , "SIX" , "THREE" , "FOUR" , "SEVEN" , "EIGHT" , "NINE"};

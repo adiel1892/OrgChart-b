@@ -11,6 +11,7 @@ namespace ariel{
     public:
     Node *root;
     OrgChart();
+    ~OrgChart();
     OrgChart &add_root(const string & job);
     OrgChart &add_sub(const string &father, const string &son);
     Node* searchNode(const string & job);
