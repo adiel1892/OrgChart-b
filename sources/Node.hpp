@@ -5,9 +5,8 @@ class Node{
     std::string job;
     std::vector<Node*> subs;
     int high = -1;
-    Node(const std::string & job){
-        this->job = job;
-    }
+    std::string father = "root";
+    Node(const std::string & job) : job(job){};
     ~Node(){
 
     }
