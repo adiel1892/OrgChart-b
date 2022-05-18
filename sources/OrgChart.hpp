@@ -30,10 +30,10 @@ namespace ariel{
         bool operator!=(const iterator &other);
         string operator*();
         iterator &operator++();
-        // iterator operator++(int);
+        iterator operator++(int);
     };
-    iterator begin_level_order();
-    iterator end_level_order();
+    iterator begin_level_order()const;
+    iterator end_level_order()const;
     iterator begin_reverse_order();
     iterator reverse_order();
     iterator begin_preorder();

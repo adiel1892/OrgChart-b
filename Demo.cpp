@@ -1,3 +1,5 @@
+
+   
 /**
  * Demo file for the exercise on iterators
  *
@@ -26,7 +28,7 @@ int main() {
   cout << organization << endl; /* Prints the org chart in a reasonable format. For example:
        CEO
        |--------|--------|
-       CTO      CFO      COO  
+       CTO      CFO      COO
        |                 |
        VP_SW             VP_BI
  */
@@ -34,7 +36,6 @@ int main() {
   for (auto it = organization.begin_level_order(); it != organization.end_level_order(); ++it)
   {
     cout << (*it) << " " ;
-    // cout << "check 1" << endl;
   } // prints: CEO CTO CFO COO VP_SW VP_BI
   for (auto it = organization.begin_reverse_order(); it != organization.reverse_order(); ++it)
   {
@@ -44,11 +45,11 @@ int main() {
     cout << (*it) << " " ;
   }  // prints: CEO CTO VP_SW CFO COO VP_BI
 
-  // for (string element : organization)
-  // { // this should work like level order
-  //   cout << element << " " ;
-  // } // prints: CEO CTO CFO COO VP_SW VP_BI
-
+  for (auto element : organization)
+  { // this should work like level order
+    cout << element << " " ;
+  } // prints: CEO CTO CFO COO VP_SW VP_BI
+  
   // demonstrate the arrow operator:
   for (auto it = organization.begin_level_order(); it != organization.end_level_order(); ++it)
   {
