@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <vector>
 // Each person in the organization is a node
