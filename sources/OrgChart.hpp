@@ -34,7 +34,6 @@ namespace ariel{
         bool operator!=(const iterator &other);
         string operator*();
         iterator &operator++();
-        // iterator operator++(int);
     };
     iterator begin_level_order()const;
     iterator end_level_order()const;
