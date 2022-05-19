@@ -22,7 +22,7 @@ OrgChart::OrgChart(OrgChart && other)noexcept{
 }
 
 // move assignment operator
-OrgChart & OrgChart::operator=(const OrgChart && other)noexcept{
+OrgChart & OrgChart::operator=(OrgChart && other)noexcept{
     return *this;
 }
 
