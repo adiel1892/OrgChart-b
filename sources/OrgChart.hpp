@@ -11,6 +11,10 @@ namespace ariel{
     public:
     Node *root;
     OrgChart();
+    OrgChart(const OrgChart & other);
+    OrgChart &operator=(const OrgChart & other);
+    OrgChart(OrgChart && other)noexcept;
+    OrgChart &operator=(OrgChart && other)noexcept;
     ~OrgChart();
     OrgChart &add_root(const string & job);
     OrgChart &add_sub(const string &father, const string &son);
@@ -30,7 +34,7 @@ namespace ariel{
         bool operator!=(const iterator &other);
         string operator*();
         iterator &operator++();
-        iterator operator++(int);
+        // iterator operator++(int);
     };
     iterator begin_level_order()const;
     iterator end_level_order()const;

@@ -6,14 +6,43 @@ using namespace std;
 OrgChart::OrgChart(){
     this->root = nullptr;
 }
+// copy constructor
+OrgChart::OrgChart(const OrgChart & other) : root(other.root){};
 
+// copy assignment operator
+OrgChart & OrgChart::operator=(const OrgChart & other){
+    this->root = other.root;
+    return *this;
+}
+
+// move constructor
+OrgChart::OrgChart(OrgChart && other)noexcept{
+    this->root = other.root;
+    other.root = nullptr;
+}
+
+// move assignment operator
+OrgChart & OrgChart::operator=(const OrgChart && other)noexcept{
+    return *this;
+}
+
+
+// destructor
 OrgChart::~OrgChart(){
+    vector<Node*> iter =  this->begin_level_order().getNodes();
+    for(unsigned int i = 0; i < iter.size(); i++){
+        delete iter.at(i);
+    }
+
     
 }
 
+// add root to the organization
 OrgChart & OrgChart::add_root(const string & job){
+    // The organization is empty
     if(this->root == nullptr){
         this->root = new Node(job);
+        // height - 0
         this->root->high = 0;
     }else{
         // there is already root so well make a new root and point the new root to the old root
@@ -30,6 +59,7 @@ vector<Node*> OrgChart::iterator::getNodes(){
     return this->nodes;
 }
 
+// add child to the father
 OrgChart & OrgChart::add_sub(const string &father, const string &son){
     Node* dad =  searchNode(father);
     if(dad == nullptr){
@@ -44,6 +74,8 @@ OrgChart & OrgChart::add_sub(const string &father, const string &son){
     }
     return *this;
 }
+// searching a node by level order run.
+// if we found the node we will return it, if we didn't found the node well return null.
 Node* OrgChart::searchNode(const string & job){
     if(this->root == nullptr){
         throw invalid_argument("There is not a root for this organization");
@@ -66,7 +98,7 @@ Node* OrgChart::searchNode(const string & job){
     }
     return nullptr;
 }
-
+// printing the organization by level order. each node have in brackets next to him his dad
 ostream& ariel::operator<<(ostream& out ,const OrgChart &org){
     if(!org.root){
         return out;
@@ -85,6 +117,8 @@ ostream& ariel::operator<<(ostream& out ,const OrgChart &org){
     return out;
 }
 
+// There are 3 different iterators.
+// The iterator gets string of the way (level || reverse || preorder) and the root.
 OrgChart::iterator::iterator(Node* node , const string &way){
     this->currNode = node;
     if(node != nullptr){
@@ -194,11 +228,11 @@ OrgChart::iterator & OrgChart::iterator::operator++(){
     }
     return *this;
 }
-OrgChart::iterator OrgChart::iterator::operator++(int){
-    OrgChart::iterator it = *this;
-    ++*this;
-    return it;
-}
+// OrgChart::iterator OrgChart::iterator::operator++(int){
+//     OrgChart::iterator it = *this;
+//     ++*this;
+//     return it;
+// }
 OrgChart::iterator OrgChart::begin_level_order()const{
     return OrgChart::iterator(root , "level");
 }
