@@ -6,35 +6,12 @@ using namespace std;
 OrgChart::OrgChart(){
     this->root = nullptr;
 }
-// copy constructor
-OrgChart::OrgChart(const OrgChart & other) : root(other.root){};
-
-// copy assignment operator
-OrgChart & OrgChart::operator=(const OrgChart & other){
-    this->root = other.root;
-    return *this;
-}
-
-// move constructor
-OrgChart::OrgChart(OrgChart && other)noexcept{
-    this->root = other.root;
-    other.root = nullptr;
-}
-
-// move assignment operator
-OrgChart & OrgChart::operator=(OrgChart && other)noexcept{
-    return *this;
-}
-
-
 // destructor
 OrgChart::~OrgChart(){
     vector<Node*> iter =  this->begin_level_order().getNodes();
     for(unsigned int i = 0; i < iter.size(); i++){
         delete iter.at(i);
     }
-
-    
 }
 
 // add root to the organization
