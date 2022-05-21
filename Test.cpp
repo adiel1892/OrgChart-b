@@ -30,6 +30,11 @@ TEST_CASE("test_1"){
     CHECK(org.begin_level_order().getNodes().size() == 10);
     CHECK(org.begin_preorder().getNodes().size() == 10);
     CHECK(org.begin_reverse_order().getNodes().size() == 10);
+    CHECK(org.in_the_org("TWO") == true);
+    CHECK(org.in_the_org("ONE") == true);
+    CHECK(org.in_the_org("FIVE") == true);
+    CHECK(org.in_the_org("TEN") == true);
+    CHECK(org.in_the_org("ELEVEN") == false);
 
     vector<string> BEGIN_LEVEL_ORDER = {"ONE" , "TWO" , "THREE" , "FOUR" , "FIVE" , "SIX" , "SEVEN" , "EIGHT" , "TEN" , "NINE"};
     unsigned int i = 0;

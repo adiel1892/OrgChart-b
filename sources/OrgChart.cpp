@@ -19,18 +19,10 @@ OrgChart & OrgChart::add_root(const string & job){
     // The organization is empty
     if(this->root == nullptr){
         this->root = new Node(job);
-        // height - 0
-        this->root->high = 0;
     }else{
-        // there is already root so well make a new root and point the new root to the old root
-        Node *newRoot = new Node(job);
-        newRoot->subs.push_back(this->root);
-        this->root->father = job;
-        this->root = newRoot;
-        for(unsigned int i = 0; i < this->begin_level_order().getNodes().size(); i++){
-            this->begin_level_order().getNodes().at(i)->high++;
-        }
+        this->root->job = job;
     }
+    this->root->high = 0;
     return *this;
 }
 vector<Node*> OrgChart::iterator::getNodes(){
@@ -39,10 +31,10 @@ vector<Node*> OrgChart::iterator::getNodes(){
 
 // add child to the father
 OrgChart & OrgChart::add_sub(const string &father, const string &son){
-    Node* dad =  searchNode(father);
-    if(dad == nullptr){
+    if(!in_the_org(father)){
         throw invalid_argument("Can't add sub to Null");
     }
+    Node* dad =  searchNode(father);
     dad->subs.push_back(new Node(son));
     for(unsigned int i = 0; i < dad->subs.size(); i++){
         if(dad->subs.at(i)->high == -1){
