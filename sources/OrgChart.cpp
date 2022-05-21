@@ -226,21 +226,21 @@ OrgChart::iterator OrgChart::begin_level_order()const{
 OrgChart::iterator OrgChart::end_level_order()const{
     return OrgChart::iterator(nullptr , "null");
 }
-OrgChart::iterator OrgChart::begin_reverse_order(){
+OrgChart::iterator OrgChart::begin_reverse_order()const{
     return OrgChart::iterator(root , "reverse");
 }
-OrgChart::iterator OrgChart::reverse_order(){
+OrgChart::iterator OrgChart::reverse_order()const{
     return OrgChart::iterator(nullptr , "null");
 }
-OrgChart::iterator OrgChart::begin_preorder(){
+OrgChart::iterator OrgChart::begin_preorder()const{
     return OrgChart::iterator(root , "preorder");
 }
-OrgChart::iterator OrgChart::end_preorder(){
+OrgChart::iterator OrgChart::end_preorder()const{
     return OrgChart::iterator(nullptr , "null");
 }
-OrgChart::iterator OrgChart::begin(){
+OrgChart::iterator OrgChart::begin()const{
     return OrgChart::iterator(root , "level");
 }
-OrgChart::iterator OrgChart::end(){
+OrgChart::iterator OrgChart::end()const{
     return OrgChart::iterator(nullptr , "null");
 }

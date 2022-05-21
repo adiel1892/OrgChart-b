@@ -38,11 +38,11 @@ namespace ariel{
     };
     iterator begin_level_order()const;
     iterator end_level_order()const;
-    iterator begin_reverse_order();
-    iterator reverse_order();
-    iterator begin_preorder();
-    iterator end_preorder();
-    iterator begin();
-    iterator end();
+    iterator begin_reverse_order()const;
+    iterator reverse_order()const;
+    iterator begin_preorder()const;
+    iterator end_preorder()const;
+    iterator begin()const;
+    iterator end()const;
     };
 }
