@@ -25,6 +25,7 @@ OrgChart & OrgChart::add_root(const string & job){
         // there is already root so well make a new root and point the new root to the old root
         Node *newRoot = new Node(job);
         newRoot->subs.push_back(this->root);
+        this->root->father = job;
         this->root = newRoot;
         for(unsigned int i = 0; i < this->begin_level_order().getNodes().size(); i++){
             this->begin_level_order().getNodes().at(i)->high++;
@@ -75,6 +76,17 @@ Node* OrgChart::searchNode(const string & job){
     }
     return nullptr;
 }
+
+// check if worker is part of organization
+bool OrgChart::in_the_org(const string & job){
+    for(unsigned int i = 0; i < this->begin_level_order().getNodes().size(); i++){
+        if(this->begin_level_order().getNodes().at(i)->job == job){
+            return true;
+        }
+    }
+    return false;
+}
+
 // printing the organization by level order. each node have in brackets next to him his dad
 ostream& ariel::operator<<(ostream& out ,const OrgChart &org){
     if(!org.root){
@@ -205,6 +217,9 @@ OrgChart::iterator & OrgChart::iterator::operator++(){
     }
     return *this;
 }
+
+
+
 OrgChart::iterator OrgChart::begin_level_order()const{
     return OrgChart::iterator(root , "level");
 }

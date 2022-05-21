@@ -19,6 +19,7 @@ namespace ariel{
     OrgChart &add_root(const string & job);
     OrgChart &add_sub(const string &father, const string &son);
     Node* searchNode(const string & job);
+    bool in_the_org(const string & job);
     friend ostream & operator<<(ostream& out , const OrgChart &org);
     class iterator{
         private:
