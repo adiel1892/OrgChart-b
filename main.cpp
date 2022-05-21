@@ -24,8 +24,6 @@ int main(){
         cout << "5 - iterator by level order" << endl;
         cout << "6 - iterator by reverse level order" << endl;
         cout << "7 - iterator by pre order" << endl;
-        
-
         string user_choice_s;
         int user_choice;
         cin >> user_choice_s;
@@ -33,7 +31,6 @@ int main(){
         string worker = "";
         string father = "";
         bool flag = false;
-
         switch(user_choice){
             case 1:
                 cout << "Please write the root worker name." << endl;
@@ -96,10 +93,6 @@ int main(){
                 cout << "Please insert a valid case." << endl;
                 break;
         }
-
     }
-    
-
-
     return 0;
 }
