@@ -29,6 +29,9 @@ OrgChart & OrgChart::add_root(const string & job){
     if(this->root == nullptr){
         this->root = new Node(job);
     }else{
+        for(unsigned int i = 0; i < this->root->subs.size(); i++){
+            this->root->subs.at(i)->father = job;
+        }
         this->root->job = job;
     }
     this->root->high = 0;
