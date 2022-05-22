@@ -25,6 +25,9 @@ OrgChart::~OrgChart(){
 
 // add root to the organization
 OrgChart & OrgChart::add_root(const string & job){
+    if(job == ""){
+        throw invalid_argument("cant add null job");
+    }
     // The organization is empty
     if(this->root == nullptr){
         this->root = new Node(job);
@@ -43,6 +46,9 @@ vector<Node*> OrgChart::iterator::getNodes(){
 
 // add child to the father
 OrgChart & OrgChart::add_sub(const string &father, const string &son){
+    if(son == ""){
+        throw invalid_argument("cant add null job");
+    }
     if(!in_the_org(father)){
         throw invalid_argument("Can't add sub to Null");
     }
