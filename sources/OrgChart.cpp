@@ -8,10 +8,6 @@ OrgChart::OrgChart(){
 }
 // destructor
 OrgChart::~OrgChart(){
-    // vector<Node*> iter =  this->begin_level_order().getNodes();
-    // for(unsigned int i = 0; i < iter.size(); i++){
-    //     delete iter.at(i);
-    // }
     if(this->root == nullptr){
         return;
     }
