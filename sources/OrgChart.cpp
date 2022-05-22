@@ -3,26 +3,22 @@
 using namespace ariel;
 using namespace std;
 
-OrgChart::OrgChart(){
-    this->root = nullptr;
-}
 // destructor
 OrgChart::~OrgChart(){
-    if(this->root == nullptr){
-        return;
-    }
-    std::queue<Node*> helper; 
-    helper.push(this->root);
-    while(!helper.empty()){
-        int times = helper.size();
-        while(times > 0){
-            Node* tmp = helper.front();
-            helper.pop();
-            for(unsigned int i = 0; i < tmp->subs.size(); i++){
-                helper.push(tmp->subs.at(i));
+    if(this->root != nullptr){
+        std::queue<Node*> helper; 
+        helper.push(this->root);
+        while(!helper.empty()){
+            unsigned int times = helper.size();
+            while(times > 0){
+                Node* tmp = helper.front();
+                helper.pop();
+                for(unsigned int i = 0; i < tmp->subs.size(); i++){
+                    helper.push(tmp->subs.at(i));
+                }
+                times--;
+                delete tmp;
             }
-            times--;
-            delete tmp;
         }
     }
 }
@@ -59,14 +55,14 @@ OrgChart & OrgChart::add_sub(const string &father, const string &son){
 }
 // searching a node by level order run.
 // if we found the node we will return it, if we didn't found the node well return null.
-Node* OrgChart::searchNode(const string & job){
+Node* OrgChart::searchNode(const string & job)const{
     if(this->root == nullptr){
         throw invalid_argument("There is not a root for this organization");
     }
     std::queue<Node*> helper; 
     helper.push(this->root);
     while(!helper.empty()){
-        int times = helper.size();
+        unsigned int times = helper.size();
         while(times > 0){
             Node* tmp = helper.front();
             // we found our node
@@ -83,14 +79,14 @@ Node* OrgChart::searchNode(const string & job){
 }
 
 // check if worker is part of organization
-bool OrgChart::in_the_org(const string & job){
+bool OrgChart::in_the_org(const string & job)const{
     if(this->root == nullptr){
         return false;
     }
     std::queue<Node*> helper; 
     helper.push(this->root);
     while(!helper.empty()){
-        int times = helper.size();
+        unsigned int times = helper.size();
         while(times > 0){
             Node* tmp = helper.front();
             if(tmp->job == job){
@@ -108,7 +104,7 @@ bool OrgChart::in_the_org(const string & job){
 
 // printing the organization by level order. each node have in brackets next to him his dad
 ostream& ariel::operator<<(ostream& out ,const OrgChart &org){
-    if(!org.root){
+    if(org.root == nullptr){
         return out;
     }
     vector<Node*> iter = org.begin_level_order().getNodes();
@@ -158,7 +154,7 @@ void OrgChart::iterator::iter_begin_level_order(Node* node){
     helper.push(node);
     this->nodes.push_back(node);
     while(!helper.empty()){
-        int times = helper.size();
+        unsigned int times = helper.size();
         while(times > 0){
             Node* tmp = helper.front();
             helper.pop();
@@ -177,17 +173,17 @@ void OrgChart::iterator::iter_begin_reverse_order(Node* node){
     helper.push(node);
     nodeStack.push(node);
     while(!helper.empty()){
-        int times = helper.size();
+        unsigned int times = helper.size();
         while(times > 0){
             Node* tmp = helper.front();
             helper.pop();
-            for(int i = tmp->subs.size() - 1; i >= 0; i--){
+            for(int i = (int)tmp->subs.size() - 1; i >= 0; i--){
                 if(tmp->subs.size() >= 0){
                     unsigned int ii = (unsigned int)(i);
                     helper.push(tmp->subs.at(ii));
                 }
             }
-            for(int i = tmp->subs.size() - 1; i >= 0; i--){
+            for(int i = (int)tmp->subs.size() - 1; i >= 0; i--){
                 if(tmp->subs.size() >= 0){
                     unsigned int ii = (unsigned int)(i);
                     nodeStack.push(tmp->subs.at(ii));
@@ -213,7 +209,7 @@ void OrgChart::iterator::iter_begin_preorder(Node* node){
         Node* tmp = nodeStack.top();
         this->nodes.push_back(tmp);
         nodeStack.pop();
-        for(int i = tmp->subs.size() - 1; i >= 0; i--){
+        for(int i = (int)tmp->subs.size() - 1; i >= 0; i--){
             if(tmp->subs.size() >= 0){
                 unsigned int ii = (unsigned int)(i);
                 nodeStack.push(tmp->subs.at(ii));
@@ -246,50 +242,44 @@ OrgChart::iterator & OrgChart::iterator::operator++(){
 
 
 OrgChart::iterator OrgChart::begin_level_order()const{
-    if(this->root){
-        return OrgChart::iterator(root , "level");
-    }else{
+    if(this->root == nullptr){
         throw invalid_argument("Organization is empty!");
     }
+    return OrgChart::iterator(root , "level");
 }
 OrgChart::iterator OrgChart::end_level_order()const{
-    if(this->root){
-        return OrgChart::iterator(nullptr , "null");
-    }else{
+    if(this->root == nullptr){
         throw invalid_argument("Organization is empty!");
     }
+    return OrgChart::iterator(nullptr , "null");
 }
 OrgChart::iterator OrgChart::begin_reverse_order()const{
-    if(this->root){
-        return OrgChart::iterator(root , "reverse");
-    }else{
+    if(this->root == nullptr){
         throw invalid_argument("Organization is empty!");
     }
+    return OrgChart::iterator(root , "reverse");
 }
 OrgChart::iterator OrgChart::reverse_order()const{
-    if(this->root){
-        return OrgChart::iterator(nullptr , "null");
-    }else{
+    if(this->root == nullptr){
         throw invalid_argument("Organization is empty!");
     }
+    return OrgChart::iterator(nullptr , "null");
 }
 OrgChart::iterator OrgChart::begin_preorder()const{
-    if(this->root){
-        return OrgChart::iterator(root , "preorder");
-    }else{
+    if(this->root == nullptr){
         throw invalid_argument("Organization is empty!");
     }
+    return OrgChart::iterator(root , "preorder");
 }
 OrgChart::iterator OrgChart::end_preorder()const{
-    if(this->root){
-        return OrgChart::iterator(nullptr , "null");
-    }else{
+    if(this->root == nullptr){
         throw invalid_argument("Organization is empty!");
     }
+    return OrgChart::iterator(nullptr , "null");
 }
 OrgChart::iterator OrgChart::begin()const{
     return OrgChart::iterator(root , "begin");
 }
-OrgChart::iterator OrgChart::end()const{
+OrgChart::iterator OrgChart::end(){
     return OrgChart::iterator(nullptr , "end");
 }

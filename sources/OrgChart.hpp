@@ -10,7 +10,9 @@ namespace ariel{
     class OrgChart{
     public:
     Node *root;
-    OrgChart();
+    OrgChart(){
+        this->root = nullptr;
+    }
     OrgChart(const OrgChart & other);
     OrgChart &operator=(const OrgChart & other);
     OrgChart(OrgChart && other)noexcept;
@@ -18,8 +20,8 @@ namespace ariel{
     ~OrgChart();
     OrgChart &add_root(const string & job);
     OrgChart &add_sub(const string &father, const string &son);
-    Node* searchNode(const string & job);
-    bool in_the_org(const string & job);
+    Node* searchNode(const string & job)const;
+    bool in_the_org(const string & job)const;
     friend ostream & operator<<(ostream& out , const OrgChart &org);
     class iterator{
         private:
@@ -43,6 +45,6 @@ namespace ariel{
     iterator begin_preorder()const;
     iterator end_preorder()const;
     iterator begin()const;
-    iterator end()const;
+    static iterator end();
     };
 }
