@@ -8,9 +8,26 @@ OrgChart::OrgChart(){
 }
 // destructor
 OrgChart::~OrgChart(){
-    vector<Node*> iter =  this->begin_level_order().getNodes();
-    for(unsigned int i = 0; i < iter.size(); i++){
-        delete iter.at(i);
+    // vector<Node*> iter =  this->begin_level_order().getNodes();
+    // for(unsigned int i = 0; i < iter.size(); i++){
+    //     delete iter.at(i);
+    // }
+    if(this->root == nullptr){
+        return;
+    }
+    std::queue<Node*> helper; 
+    helper.push(this->root);
+    while(!helper.empty()){
+        int times = helper.size();
+        while(times > 0){
+            Node* tmp = helper.front();
+            helper.pop();
+            for(unsigned int i = 0; i < tmp->subs.size(); i++){
+                helper.push(tmp->subs.at(i));
+            }
+            times--;
+            delete tmp;
+        }
     }
 }
 
@@ -71,9 +88,23 @@ Node* OrgChart::searchNode(const string & job){
 
 // check if worker is part of organization
 bool OrgChart::in_the_org(const string & job){
-    for(unsigned int i = 0; i < this->begin_level_order().getNodes().size(); i++){
-        if(this->begin_level_order().getNodes().at(i)->job == job){
-            return true;
+    if(this->root == nullptr){
+        return false;
+    }
+    std::queue<Node*> helper; 
+    helper.push(this->root);
+    while(!helper.empty()){
+        int times = helper.size();
+        while(times > 0){
+            Node* tmp = helper.front();
+            if(tmp->job == job){
+                return true;
+            }
+            helper.pop();
+            for(unsigned int i = 0; i < tmp->subs.size(); i++){
+                helper.push(tmp->subs.at(i));
+            }
+            times--;
         }
     }
     return false;
@@ -115,8 +146,14 @@ OrgChart::iterator::iterator(Node* node , const string &way){
             iter_begin_preorder(node);
             this->currNode = this->getNodes().at(0);
         }
+        if(way == "begin"){
+            iter_begin_level_order(node);
+            this->currNode = this->getNodes().at(0);
+        }
     }else{
-        this->currNode = nullptr;
+        if(way == "end"){
+            this->currNode = nullptr;
+        }
     }
 }
 
@@ -213,26 +250,50 @@ OrgChart::iterator & OrgChart::iterator::operator++(){
 
 
 OrgChart::iterator OrgChart::begin_level_order()const{
-    return OrgChart::iterator(root , "level");
+    if(this->root){
+        return OrgChart::iterator(root , "level");
+    }else{
+        throw invalid_argument("Organization is empty!");
+    }
 }
 OrgChart::iterator OrgChart::end_level_order()const{
-    return OrgChart::iterator(nullptr , "null");
+    if(this->root){
+        return OrgChart::iterator(nullptr , "null");
+    }else{
+        throw invalid_argument("Organization is empty!");
+    }
 }
 OrgChart::iterator OrgChart::begin_reverse_order()const{
-    return OrgChart::iterator(root , "reverse");
+    if(this->root){
+        return OrgChart::iterator(root , "reverse");
+    }else{
+        throw invalid_argument("Organization is empty!");
+    }
 }
 OrgChart::iterator OrgChart::reverse_order()const{
-    return OrgChart::iterator(nullptr , "null");
+    if(this->root){
+        return OrgChart::iterator(nullptr , "null");
+    }else{
+        throw invalid_argument("Organization is empty!");
+    }
 }
 OrgChart::iterator OrgChart::begin_preorder()const{
-    return OrgChart::iterator(root , "preorder");
+    if(this->root){
+        return OrgChart::iterator(root , "preorder");
+    }else{
+        throw invalid_argument("Organization is empty!");
+    }
 }
 OrgChart::iterator OrgChart::end_preorder()const{
-    return OrgChart::iterator(nullptr , "null");
+    if(this->root){
+        return OrgChart::iterator(nullptr , "null");
+    }else{
+        throw invalid_argument("Organization is empty!");
+    }
 }
 OrgChart::iterator OrgChart::begin()const{
-    return OrgChart::iterator(root , "level");
+    return OrgChart::iterator(root , "begin");
 }
 OrgChart::iterator OrgChart::end()const{
-    return OrgChart::iterator(nullptr , "null");
+    return OrgChart::iterator(nullptr , "end");
 }
