@@ -10,9 +10,7 @@ namespace ariel{
     class OrgChart{
     public:
     Node *root;
-    OrgChart(){
-        this->root = nullptr;
-    }
+    OrgChart() : root(nullptr){};
     OrgChart(const OrgChart & other);
     OrgChart &operator=(const OrgChart & other);
     OrgChart(OrgChart && other)noexcept;
